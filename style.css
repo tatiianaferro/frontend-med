@@ -2,9 +2,92 @@
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css");
 
-*{
+*{ /*para todos os elementos*/
     margin: 0; /* * tirar todas margens */
     padding:0;
+    list-style: none; /*para todas listas*/
+    text-decoration: none;
+}
+
+:root{
+    --font-primary: "Baloo Da 2", sans-serif;
+    --font-secondary: "Josefin Slab", sans-serif;
+    --font-action: "Mulish", sans-serif;
+
+}
+
+.burger{ /*é o primeiro item ent inicialmente se posiciona em cima, post ira para a posicao certa*/
+    /*background-color: #97c997; */
+    width: 2rem;
+    height: 2rem;
+    padding: .3rem;
+    position: fixed; /* nao sai da posicao*/
+    z-index: 100; /*trazemos o elemento pra frente e tudo fica atras dele*/
+    right: 3rem;
+    top: 3rem; /*descemos e elemento*/
+    display: flex;
+    flex-direction: column; /*um embaixo do outro porem ficam juntos*/
+    justify-content: space-evenly; /*para espalhar a linha*/
+    cursor: pointer;
+}
+
+.show-menu .burger{ /*era .burger.show-menu mas mudamos pq burger e sidebar estao dentro do container e ai n escrevemos container mas sim os elementos*/
+    right: 16rem;
+}
+
+.line{ /*para fazer as linhas do burger*/
+    width: 100%;
+    height: .1rem; /*para aparecer o objecto tem que ter altura*/
+    background-color: white;
+    box-shadow: 0.1rem 0.1rem 1px #5F8575;
+    border-radius: 1px; /*arredondamento da borda*/
+    transition: transform 1.5s;
+
+}
+
+/*para transf. o burger em X*/
+
+.show-menu #line1{ 
+    transform: rotate(45deg) translate(.3rem, .45rem); /*translate p mudar a posicao*/
+}
+
+.show-menu #line2{ 
+    opacity: 0;
+    visibility: hidden;
+}
+
+.show-menu #line3{ 
+    transform: rotate(-45deg) translate(.3rem, -.45rem); 
+}
+
+.burger span{
+    position: absolute;
+    left: 3rem;
+    background-color: #5F8575;
+    height: 2rem;
+    width: 6rem;
+    display: flex; /*edit de centralizar*/
+    justify-content: center;/*centralizar na horizontal*/
+    align-items: center; /*centralizar na vertical*/
+    color: white;
+    font-family: var(--font-action);
+    opacity: 0; /*para o FECHAR nao ser exibido eqt o menu esta fechado*/
+}
+
+
+.burger span::before{
+    content: "";
+    position: absolute;
+    border-right: .5rem solid #5F8575;
+    border-top: .5rem solid transparent;
+    border-left: .5rem solid transparent;
+    border-bottom: .5rem solid transparent;
+    left: -1rem;
+
+}
+
+.show-menu .burger:hover span{
+    opacity: 1; /*para o FECHAR ser exibido eqt o menu esta aberto e com o mouse sobre ele*/
 }
 
 header{
@@ -48,7 +131,7 @@ header{
 .banner h1{
     color: #ffffff;
     font-size: 4.5rem;
-    font-family: "Baloo Da 2", sans-serif ;
+    font-family: var(--font-primary);
     font-weight: 190; /*peso da fonte - negrito*/
     text-shadow: .2rem .3rem 2px rgba(0,0,0,0.4);
     margin-bottom: -25px;
@@ -76,13 +159,14 @@ header{
 }
 
 .banner button{
-    font-family: "Mulish", sans-serif;
+    font-family: var(--font-action);
     text-transform: uppercase;
+    font-weight: 500;
     letter-spacing: .1rem;
     color: white;
-    background-color:#C1E1C1 ;
-    background: #1D976C;
-    background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  /* Chrome 10-25, Safari 5.1-6 */
+    background-color:#97c997 ;
+    /*background: #1D976C;
+    background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);  /* Chrome 10-25, Safari 5.1-6 
     background: linear-gradient(to right, #93F9B9, #1D976C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     padding: 1rem 1.5rem;
     border: none;
@@ -94,8 +178,72 @@ header{
 
 .banner button:hover{ /*classe que identifica uma accao/evento*/
     opacity: 1;
-    color: #1b382f;
+    color: black;
 }
 
+.sidebar{
+    width: 20rem;
+    height: 100vh; /*tamanho exacto da tela*/
+    background-color: #97c997;
+    position: fixed;
+    top: 0;
+    right: -20rem; /* 20 é o tamanho dele, -20 pra desaparecer inicialmente a posicao será -20 para fazer o motion de aparecer*/
+    opacity: 0.8;
+    transition: all 1s;
+}
 
+.show-menu .sidebar{
+    right: 0;
+}
 
+.menu{
+    position: absolute;
+    top: 45%; /*descer o menu*/
+    left: 50%;/*para centralizar*/
+    transform: translate(-50%,-50%); /*eixo x e y para centralizar*/
+
+}
+
+.menu-item{
+    text-align: center;
+    margin-bottom: .8rem;
+}
+
+.menu-link{
+    font-family: var(--font-action);
+    font-size: 1.6rem;
+    color: white;
+    transition: color 0.5s; /*transicao p demorar um pouco p trocar de cor*/
+}
+
+.menu-link:hover{
+    color: #5F8575;
+}
+
+.social-media{
+    position: absolute;
+    bottom: 5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.social-media i{
+    /*background-color: rgba(95,133,117,0.5);*/
+    background-color: rgb(255,255,255);
+    opacity: 0.7;
+    color:#97c997;
+    height: 2.5rem; /*tamanho do obj*/
+    width: 2.5rem;
+    font-size: 1.6rem;
+    display: flex; /*para alinhar os icones eixo x horizontal*/
+    justify-content: center; /*para alinhar os icones eixo x horizontal*/
+    align-items: center;
+    border-radius: 50%;
+    transition: background-color 0.7s;
+}
+
+.social-media i:hover{
+    background-color: rgba(95,133,117,0.5);
+    color: white;
+}
